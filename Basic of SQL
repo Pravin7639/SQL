@@ -1,0 +1,23 @@
+create database Pravin45
+go
+use Pravin45
+go
+create table Student(
+RollNumber int,
+Name varchar(50),
+Age int,
+isConfirmed bit
+)
+go
+select * from Student
+go
+insert into Student (RollNumber,Name,Age,isConfirmed) values(1,'Ajay',20,1)
+insert into Student values(2,'Ganesh',23,1)
+insert into Student values(3,'Raj',33,0)
+go
+select * from Student
+go
+delete from Student where RollNumber
+go
+drop table Student
+
