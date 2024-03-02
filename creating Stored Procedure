@@ -1,0 +1,9 @@
+
+create proc uspGetStudentByRollNumber
+@RollNumber varchar(50)
+as
+begin
+	select * from student where RollNumber = @RollNumber
+end
+
+execute uspGetStudentByRollNumber 3
