@@ -1,0 +1,8 @@
+-- stored procedures
+
+-- simple sp
+create procedure uspGetAllStudents
+as
+begin
+	select * from B22Student
+end
