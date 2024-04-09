@@ -1,0 +1,98 @@
+
+alter procedure uspGetAllStudents
+as
+begin
+	select * from B22Student where Gender = 'Male'
+end
+
+execute uspGetAllStudents
+go
+
+drop procedure uspGetAllStudents
+go
+
+create proc uspGetAllStudents
+as
+begin
+	select * from B22Student
+end
+go
+
+exec uspGetAllStudents
+
+go
+
+-- stored procedure with parameter
+
+create proc uspGetAllStudentsOnGender
+@Gender varchar(20)
+as
+begin
+	select * from B22Student where Gender = @Gender
+end
+
+go
+
+execute uspGetAllStudentsOnGender
+-- Procedure or function 'uspGetAllStudentsOnGender' expects parameter '@Gender', which was not supplied.
+
+execute uspGetAllStudentsOnGender 'male'
+execute uspGetAllStudentsOnGender 'female'
+execute uspGetAllStudentsOnGender 'all'
+-- select * from B22Student where Gender = 'all' -- no student having gender as all
+go
+
+alter proc uspGetAllStudentsOnGender
+@Gender varchar(20)
+as
+begin
+	
+	if @Gender = 'male' or @Gender = 'female'
+	begin
+		select * from B22Student where Gender = @Gender
+	end
+	else
+	begin
+		select * from B22Student
+	end	
+end
+
+go
+
+execute uspGetAllStudentsOnGender 'male'
+execute uspGetAllStudentsOnGender 'female'
+execute uspGetAllStudentsOnGender 'all'
+
+go
+
+-- we can rite multiple parameters with sp
+create proc uspGetAllStudentsOnGenderAge
+@Gender varchar(20), @Age int
+as
+begin
+	select * from B22Student where Gender = @Gender or Age >= @Age
+end
+
+go
+
+exec uspGetAllStudentsOnGenderAge 'male'
+-- Procedure or function 'uspGetAllStudentsOnGenderAge' expects parameter '@Age', which was not supplied.
+
+exec uspGetAllStudentsOnGenderAge 'male', 25 -- 8 records
+
+go
+alter proc uspGetAllStudentsOnGenderAge
+@Gender varchar(20), @Age int
+as
+begin
+	select * from B22Student where Gender = @Gender and Age >= @Age
+end
+go
+exec uspGetAllStudentsOnGenderAge 'male', 25 -- 1 record
+
+go
+
+exec uspGetAllStudentsOnGenderAge 25, 'male'
+-- Error converting data type varchar to int.
+
+exec uspGetAllStudentsOnGenderAge @Age = 25, @Gender = 'male'
